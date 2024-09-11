@@ -1,0 +1,12 @@
+codigo para Comitar:
+git add .
+git commit -m "Sua mensagem de commit"
+git push origin main  # ou o branch que você estiver usando
+
+-----------------------------------------------------------------------------------------------------------
+Aula 11/09/2024
+Feito em aula :
+
+OBS:
+
+-----------------------------------------------------------------------------------------------------------
