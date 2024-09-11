@@ -6,7 +6,7 @@ git push origin main  # ou o branch que você estiver usando
 -----------------------------------------------------------------------------------------------------------
 Aula 11/09/2024
 Feito em aula :
-
+Esta sendo corrigido o exercicio da da aula passada,
 OBS:
 
 -----------------------------------------------------------------------------------------------------------
