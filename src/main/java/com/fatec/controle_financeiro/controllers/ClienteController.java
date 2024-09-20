@@ -26,7 +26,7 @@ public class ClienteController {
     private int proximoId = 1;
 
     // CREATE
-    @PostMapping()
+    @PostMapping("/CREATE")
     public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
 
         for (Cliente c : clientes) {
