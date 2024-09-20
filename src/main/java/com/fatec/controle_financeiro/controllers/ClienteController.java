@@ -42,7 +42,7 @@ public class ClienteController {
     }
 
     // READ - Obter todos os clientes
-    @GetMapping()
+    @GetMapping("/Listar_Cli_Tudo")
     public ResponseEntity<List<Cliente>> getAllClientes() {
         return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
