@@ -39,7 +39,6 @@ public class UserController {
                 throw new IllegalArgumentException("ja existe nome");
             }
         }
-
         usuario.setId(proximoId++);
         usuarios.add(usuario);
 
