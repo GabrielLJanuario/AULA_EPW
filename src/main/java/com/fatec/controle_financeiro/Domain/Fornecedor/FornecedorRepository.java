@@ -1,4 +1,4 @@
-package com.fatec.controle_financeiro.Domain.fornecedor;
+package com.fatec.controle_financeiro.Domain.Fornecedor;
 
 import com.fatec.controle_financeiro.entities.Fornecedor;
 import org.springframework.data.jpa.repository.JpaRepository;
