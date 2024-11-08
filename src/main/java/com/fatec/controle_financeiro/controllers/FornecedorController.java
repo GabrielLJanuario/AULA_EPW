@@ -16,7 +16,7 @@ public class FornecedorController {
     private int proximoId = 1;
 
     // CREATE    
-    @PostMapping()
+    @PostMapping("/CREATE")
     public ResponseEntity<Fornecedor> create(@RequestBody Fornecedor fornecedor) {
         for (Fornecedor f : fornecedores) {
             if (f.getNome().equals(fornecedor.getNome())) {
@@ -29,12 +29,12 @@ public class FornecedorController {
     }
 
     // READ
-    @GetMapping()
+    @GetMapping("/READ")
     public ResponseEntity<List<Fornecedor>> getAllFornecedores() {
         return new ResponseEntity<>(fornecedores, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/READ/{id}")
     public ResponseEntity<Fornecedor> getById(@PathVariable int id) {
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getId() == id) {
@@ -45,7 +45,7 @@ public class FornecedorController {
     }
 
     // UPDATE
-    @PutMapping("{id}")
+    @PutMapping("/UPDATE/{id}")
     public ResponseEntity<Fornecedor> updateFornecedor(@PathVariable int id, @RequestBody Fornecedor entity) {
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getId() == id) {
@@ -57,7 +57,7 @@ public class FornecedorController {
     }
 
     // DELETE
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/DELETE/{id}")
     public ResponseEntity<Void> deleteFornecedor(@PathVariable int id) {
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getId() == id) {
