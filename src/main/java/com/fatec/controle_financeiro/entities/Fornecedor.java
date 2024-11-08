@@ -1,38 +1,37 @@
 package com.fatec.controle_financeiro.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "fornecedor")
+@Table(name = "fornecedores")
 public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false, length = 60)
-    private String nome;
+    private String name;
+
+    // Construtor padrão
+    public Fornecedor() {
+    }
+
+    public Fornecedor(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     // Getters e Setters
-    // id
-    public int getId() {
-        return id;
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) { // Corrigido: o método deve aceitar um parâmetro
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // nome
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) { // Corrigido: o método deve aceitar um parâmetro
-        this.nome = nome;
-    }
 }

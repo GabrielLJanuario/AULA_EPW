@@ -1,84 +1,124 @@
 package com.fatec.controle_financeiro.controllers;
-import java.util.ArrayList;
-import java.util.List;
-//import java.util.Optional;
 
+import com.fatec.controle_financeiro.domain.cliente.ClienteRepository;
+import com.fatec.controle_financeiro.domain.cliente.ClienteService;
+import com.fatec.controle_financeiro.entities.Cliente;
+import com.fatec.controle_financeiro.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.fatec.controle_financeiro.entities.Cliente;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/api/cliente")
 public class ClienteController {
-    
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     private List<Cliente> clientes = new ArrayList<>();
     private int proximoId = 1;
 
-    // CREATE
-    @PostMapping("/CREATE")
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+    //CRUD = CREATE, READ, UPDATE E DELETE
+    
+    //CREATE    
+    @PostMapping()
+    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente) {
 
-        for (Cliente c : clientes) {
-            if (c.getNome().equals(cliente.getNome())) {
-                throw new IllegalArgumentException("Já existe um cliente com esse nome.");
+        /*for (Cliente cli : clientes) {
+            if (cli.getName().equals(cliente.getName())) {
+                throw new IllegalArgumentException("ja existe nome");
             }
         }
 
         cliente.setId(proximoId++);
         clientes.add(cliente);
 
-        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);*/
+        Cliente clienteCreated = clienteRepository.save(cliente);
+        return new ResponseEntity<>(clienteCreated, HttpStatus.CREATED);
     }
 
-    // READ - Obter todos os clientes
-    @GetMapping("/READ")
-    public ResponseEntity<List<Cliente>> getAllClientes() {
+
+    //READ
+    @GetMapping()
+    public ResponseEntity<List<Cliente>> getAllCliente() {
+        //SELECT * FROM CLIENTES
+        List<Cliente> clientes = clienteRepository.findAll();
+
         return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
-
-    // READ - Obter cliente por ID
-    @GetMapping("/READ/{id}")
-    public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
-        for (Cliente cliente : clientes) {
+    
+    @GetMapping("{id}")
+    public ResponseEntity<Cliente> getById(@PathVariable int id) {
+        /*for (Cliente cliente : clientes) {
             if (cliente.getId() == id) {
                 return new ResponseEntity<>(cliente, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+        // Se o cliente não for encontrado, retorna status 404 Not Found
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
 
-    // UPDATE
-    @PutMapping("/UPDATE/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable int id, @RequestBody Cliente clienteAtualizado) {
-        for (Cliente cliente : clientes) {
+        //select * from cliente where id = {id}
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+        if (cliente.isPresent()) {
+            return new ResponseEntity<>(cliente.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    //UPDATE
+    @PutMapping("{id}")
+    public ResponseEntity<Cliente> updateCliente(@PathVariable int id, @RequestBody Cliente entity) {
+        // Percorre a lista de clientes para encontrar o cliente com o ID correspondente
+        /*for (Cliente cliente : clientes) {
             if (cliente.getId() == id) {
-                cliente.setNome(clienteAtualizado.getNome());
+                // Se o cliente for encontrado, atualiza suas informações
+                cliente.setName(entity.getName());
+                // Retorna o cliente atualizado com status 200 OK
                 return new ResponseEntity<>(cliente, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // Se o cliente não for encontrado, retorna status 404 Not Found
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
+
+        Optional<Cliente> clienteAtual = clienteRepository.findById(id);
+        if (clienteAtual.isPresent()) {
+            entity.setId(id);
+            clienteRepository.save(entity);
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        }
     }
 
-    // DELETE
-    @DeleteMapping("/DELETE/{id}")
+    //DELETE
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable int id) {
-        for (Cliente cliente : clientes) {
+        // Percorre a lista de clientes para encontrar o cliente com o ID correspondente
+       /*for (Cliente cliente : clientes) {
             if (cliente.getId() == id) {
+                // Se o cliente for encontrado, remove-o da lista
                 clientes.remove(cliente);
+                // Retorna status 204 No Content
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // Se o cliente não for encontrado, retorna status 404 Not Found
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
+
+        Optional<Cliente> clienteAtual = clienteRepository.findById(id);
+        if (clienteAtual.isPresent()) {
+            clienteRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.fatec.controle_financeiro.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +39,7 @@ public class UserController {
                 throw new IllegalArgumentException("ja existe nome");
             }
         }
+
         usuario.setId(proximoId++);
         usuarios.add(usuario);
 
