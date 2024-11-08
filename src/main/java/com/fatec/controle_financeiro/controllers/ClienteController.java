@@ -42,13 +42,13 @@ public class ClienteController {
     }
 
     // READ - Obter todos os clientes
-    @GetMapping("/Listar_Cli_Tudo")
+    @GetMapping("/READ")
     public ResponseEntity<List<Cliente>> getAllClientes() {
         return new ResponseEntity<>(clientes, HttpStatus.OK);
     }
 
     // READ - Obter cliente por ID
-    @GetMapping("/READER/{id}")
+    @GetMapping("/READ/{id}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable int id) {
         for (Cliente cliente : clientes) {
             if (cliente.getId() == id) {
